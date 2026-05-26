@@ -36,9 +36,29 @@ class GameScene extends Phaser.Scene {
 
   create() {
     // ── Background
-    // this.add.image(GAME_W / 2, GAME_H / 2, 'bg');
     this.add.image(GAME_W / 2, GAME_H / 2, 'nyc');
  
+    // ── Mobile touch buttons
+    const btnLeft = this.add.rectangle(60, GAME_H - 40, 60, 60, 0xffffff, 0.10)
+        .setInteractive().setDepth(10);
+    const btnRight = this.add.rectangle(GAME_W - 60, GAME_H - 40, 60, 60, 0xffffff, 0.10)
+        .setInteractive().setDepth(10);
+
+    // button labels
+    this.add.text(60, GAME_H - 40, '◀', { fontSize: '16px', fill: '#fff' }).setOrigin(0.5).setDepth(6);
+    this.add.text(GAME_W - 60, GAME_H - 40, '▶', { fontSize: '16px', fill: '#fff' }).setOrigin(0.5).setDepth(6);
+
+    // track which buttons are held
+    this.touchLeft = false;
+    this.touchRight = false;
+
+    btnLeft.on('pointerdown', () => this.touchLeft = true);
+    btnLeft.on('pointerup', () => this.touchLeft = false);
+    btnLeft.on('pointerout', () => this.touchLeft = false);
+
+    btnRight.on('pointerdown', () => this.touchRight = true);
+    btnRight.on('pointerup', () => this.touchRight = false);
+    btnRight.on('pointerout', () => this.touchRight = false);
 
     // ── Ground line
     this.add.rectangle(GAME_W / 2, GAME_H - 20, GAME_W, 2, 0x334455);
@@ -78,6 +98,7 @@ class GameScene extends Phaser.Scene {
       left: Phaser.Input.Keyboard.KeyCodes.A,
       right: Phaser.Input.Keyboard.KeyCodes.D
     });
+    
 
     // ── Spawn fish on a timer
     this.time.addEvent({
@@ -160,8 +181,8 @@ class GameScene extends Phaser.Scene {
   }
 
   update() {
-    const left  = this.cursors.left.isDown  || this.wasd.left.isDown;
-    const right = this.cursors.right.isDown || this.wasd.right.isDown;
+    const left  = this.cursors.left.isDown  || this.wasd.left.isDown || this.touchLeft;
+    const right = this.cursors.right.isDown || this.wasd.right.isDown || this.touchRight;
 
     if (left) {
       this.cat.setVelocityX(-CAT_SPEED);
