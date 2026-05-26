@@ -6,9 +6,10 @@
     
     <title>Hungry Florence | 2D Game</title>
     <script src="https://cdn.jsdelivr.net/npm/phaser@v3.90.0/dist/phaser.js"></script>
-    
+    <link rel="icon" href="/assets//icon.png">
     <script src="script.js"></script>
     <title>Hungry Florence! 🐱🐟</title>
+    
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -23,6 +24,41 @@
     }
     canvas { border-radius: 12px; box-shadow: 0 0 40px rgba(100,180,255,0.3); }
   </style>
+  <style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* Fix Safari iOS viewport and scrolling */
+  html {
+    height: -webkit-fill-available;
+    overflow: hidden;
+  }
+
+  body {
+    background: #0a0a1a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* Fix for Safari iOS white space */
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    /* Fix Safari overscroll bounce */
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: none;
+  }
+
+  canvas {
+    border-radius: 12px;
+    box-shadow: 0 0 40px rgba(100,180,255,0.3);
+    /* Make canvas fit small screens */
+    max-width: 100vw;
+    max-height: 100vh;
+    touch-action: none; /* prevents Safari scroll while touching game */
+  }
+</style>
 </head>
 <body>
     <!-- <canvas id="myCanvas" width="200" height="100"></canvas> -->
